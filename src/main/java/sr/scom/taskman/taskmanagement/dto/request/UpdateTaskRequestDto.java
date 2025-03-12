@@ -1,12 +1,12 @@
 package sr.scom.taskman.taskmanagement.dto.request;
 
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sr.scom.taskman.common.enums.Priority;
 import sr.scom.taskman.common.enums.Status;
-
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor

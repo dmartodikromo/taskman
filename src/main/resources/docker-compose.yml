@@ -1,0 +1,9 @@
+services:
+  database:
+    image: 'postgres:17'
+    ports:
+      - '54321:5432'
+    environment:
+      - 'POSTGRES_USER=taskmaster'
+      - 'POSTGRES_DB=taskmanager'
+      - 'POSTGRES_PASSWORD=password'

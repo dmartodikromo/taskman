@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Status {
     COMPLETED("Completed"),
     IN_PROGRESS("In Progress"),
-    NOT_STARTED("Not Started");
+    OPEN("Open");
 
     Status(String name) {
         this.name = name;

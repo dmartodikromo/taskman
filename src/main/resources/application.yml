@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: taskman
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    show-sql: true
+  docker:
+    compose:
+      file: classpath:docker-compose.yml
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    url: postgresql://localhost:54321/taskmanager
+    user: taskmaster
+    password: password
+    clean-disabled: true
+  datasource:
+    url: postgresql://localhost:54321/taskmanager
+    username: taskmaster
+    password: password
