@@ -1,17 +1,20 @@
 package sr.scom.taskman.taskmanagement.service;
 
+import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static sr.scom.taskman.common.enums.Status.COMPLETED;
 import static sr.scom.taskman.common.enums.Status.OPEN;
 import static sr.scom.taskman.taskmanagement.dto.response.TaskResponseDto.toTaskEntity;
 import static sr.scom.taskman.taskmanagement.dto.response.TaskResponseDto.toTaskResponseDto;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import sr.scom.taskman.common.exceptions.ObjectNotFoundException;
 import sr.scom.taskman.taskmanagement.dto.request.CreateTaskRequestDto;
 import sr.scom.taskman.taskmanagement.dto.request.UpdateTaskRequestDto;
 import sr.scom.taskman.taskmanagement.dto.response.TaskResponseDto;
@@ -21,6 +24,7 @@ import sr.scom.taskman.taskmanagement.repository.TaskRepository;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final ScomRestClientService scomRestClientService;
 
     public List<TaskResponseDto> getTasks() {
         var allTasks = taskRepository.findAll();
@@ -31,7 +35,8 @@ public class TaskService {
     }
 
     public TaskResponseDto getTask(Long id) {
-        var task = taskRepository.findById(id).orElse(null);
+        var task = taskRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException(format("Task with id %s not found", id)));
         return toTaskResponseDto(task);
     }
 
@@ -46,7 +51,7 @@ public class TaskService {
     @Transactional
     public TaskResponseDto updateTask(Long id, UpdateTaskRequestDto dto) {
         var taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(format("Task with id %s not found", id)));
         taskEntity.setTitle(isEmpty(dto.getTitle()) ? taskEntity.getTitle() : dto.getTitle());
         taskEntity.setDescription(isEmpty(dto.getDescription()) ? taskEntity.getDescription() : dto.getDescription());
         taskEntity.setNotes(dto.getNotes());
@@ -63,12 +68,12 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskResponseDto markTaskAsCompleted(Long id) {
+    public String markTaskAsCompleted(Long id) throws IOException {
         var taskEntity = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(format("Task with id %s not found", id)));
         taskEntity.setStatus(COMPLETED);
         taskEntity.setCompletedDate(LocalDateTime.now());
-        var updatedTask = taskRepository.save(taskEntity);
-        return toTaskResponseDto(updatedTask);
+        taskRepository.save(taskEntity);
+        return scomRestClientService.sendUserAlert();
     }
 }

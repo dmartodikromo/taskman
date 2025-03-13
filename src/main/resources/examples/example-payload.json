@@ -1,0 +1,9 @@
+{
+  "preference": "email",
+  "type": "scom_alerts",
+  "lang": "en",
+  "subject": "some subject",
+  "mail": "me@gmail.com",
+  "attachment": [],
+  "message_body": "<table style=\\\"font-family: Arial; font-size: 12px; color: #262E68;\\\"><tr><td style=\\\"font-weight:\r\nbold;\\\">Input<\/td><td>:<\/td>File1<\/td><\/tr><tr><td style=\\\"font-weight:\r\nbold;\\\">Output<\/td><td>:<\/td><td>file1_PROCESSED.csv<\/td><\/tr><tr><td style=\\\"font-weight:\r\nbold;\\\">Process Time<\/td><td>:<\/td><td>Just now<\/td><\/tr><\/table>"
+}

@@ -1,5 +1,6 @@
 package sr.scom.taskman.taskmanagement.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}/completed")
-    public TaskResponseDto completeTask(@PathVariable("id") Long id) {
+    public String completeTask(@PathVariable("id") Long id) throws IOException {
         return taskService.markTaskAsCompleted(id);
     }
 }
