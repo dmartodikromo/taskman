@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sr.scom.taskman.taskmanagement.dto.request.CreateTaskRequestDto;
 import sr.scom.taskman.taskmanagement.entity.Task;
 
 @Data
