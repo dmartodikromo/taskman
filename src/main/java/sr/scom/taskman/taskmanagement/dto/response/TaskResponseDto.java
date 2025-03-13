@@ -21,6 +21,8 @@ public class TaskResponseDto {
     private String status;
     private LocalDateTime dueDate;
     private LocalDateTime completedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime updatedDate;
 
     public static TaskResponseDto toTaskResponseDto(Task task) {
         return builder()
@@ -31,16 +33,8 @@ public class TaskResponseDto {
                 .status(task.getStatus().getName())
                 .dueDate(task.getDueDate())
                 .completedDate(task.getCompletedDate())
-                .build();
-    }
-
-    public static Task toTaskEntity(CreateTaskRequestDto dto) {
-        return Task.builder().title(dto.getTitle())
-                .description(dto.getDescription())
-                .notes(dto.getNotes())
-                .priority(dto.getPriority())
-                .dueDate(dto.getDueDate())
-                .createdDate(LocalDateTime.now())
+                .createdDate(task.getCreatedDate())
+                .updatedDate(task.getUpdatedDate())
                 .build();
     }
 }

@@ -1,8 +1,8 @@
 package sr.scom.taskman.taskmanagement.controller;
 
-import java.io.IOException;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sr.scom.taskman.taskmanagement.dto.request.CreateTaskRequestDto;
@@ -27,12 +27,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskResponseDto createTask(@RequestBody CreateTaskRequestDto dto) {
+    public TaskResponseDto createTask(@RequestBody @Valid CreateTaskRequestDto dto) {
         return taskService.createTask(dto);
     }
 
     @PutMapping("/{id}")
-    public TaskResponseDto updateTask(@PathVariable("id") Long id, @RequestBody UpdateTaskRequestDto dto) {
+    public TaskResponseDto updateTask(@PathVariable("id") Long id, @RequestBody @Valid UpdateTaskRequestDto dto) {
         return taskService.updateTask(id, dto);
     }
 
@@ -42,7 +42,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}/completed")
-    public String completeTask(@PathVariable("id") Long id) throws IOException {
+    public String completeTask(@PathVariable("id") Long id) {
         return taskService.markTaskAsCompleted(id);
     }
 }

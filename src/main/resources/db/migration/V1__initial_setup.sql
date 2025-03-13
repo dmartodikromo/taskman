@@ -11,7 +11,8 @@ CREATE TABLE task
     notes          TEXT,
     priority       priority      NOT NULL,
     status         status        NOT NULL,
-    created_date   TIMESTAMP,
     due_date       TIMESTAMP,
-    completed_date TIMESTAMP
+    completed_date TIMESTAMP,
+    created_date   TIMESTAMP,
+    updated_date   TIMESTAMP
 );

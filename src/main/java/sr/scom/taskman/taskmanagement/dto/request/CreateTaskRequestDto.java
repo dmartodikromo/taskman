@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sr.scom.taskman.common.enums.Priority;
+import sr.scom.taskman.taskmanagement.entity.Task;
 
 @Getter
 @AllArgsConstructor
@@ -21,4 +22,13 @@ public class CreateTaskRequestDto {
     private Priority priority;
     private LocalDateTime dueDate;
     private String notes;
+
+    public static Task toTaskEntity(CreateTaskRequestDto dto) {
+        return Task.builder().title(dto.getTitle())
+                .description(dto.getDescription())
+                .notes(dto.getNotes())
+                .priority(dto.getPriority())
+                .dueDate(dto.getDueDate())
+                .build();
+    }
 }
